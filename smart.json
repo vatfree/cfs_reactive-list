@@ -1,0 +1,10 @@
+{
+  "name": "reactive-list",
+  "description": "Reactive List provides a small, fast and reactive key +  value list",
+  "homepage": "https://github.com/CollectionFS/Meteor-reactive-list",
+  "author": "CollectionFS core @aldeed & @raix",
+  "version": "0.0.1",
+  "git": "https://github.com/CollectionFS/Meteor-reactive-list.git",
+  "packages": {
+  }
+}
