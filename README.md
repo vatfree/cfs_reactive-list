@@ -18,9 +18,6 @@ Happy coding!!
 
 From the docs:
 #### <a name="ReactiveList"></a>new ReactiveList([options], sort)&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
-```
-@ReactiveList Keeps a reactive list of key+value items
-```
 -
 
 __Arguments__
@@ -56,6 +53,10 @@ var list = new ReactiveList({
    }
  });
 ```
+
+> ```ReactiveList = function(options) { ...``` [reactive-list.js:38](reactive-list.js#L38)
+
+-
 
 #Contribute
 [API Complete Documentation](internal.api.md)
