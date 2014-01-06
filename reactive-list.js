@@ -1,7 +1,7 @@
 // #ReactiveList
 // Provides a simple reactive list interface
 
-/** @ReactiveList Keeps a reactive list of key+value items
+/** @method ReactiveList Keeps a reactive list of key+value items
   * @constructor
   * @param {object} [options]
   * @param {function} sort The sort algorithm to use

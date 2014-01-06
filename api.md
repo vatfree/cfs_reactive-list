@@ -1,8 +1,7 @@
+#ReactiveList
+Provides a simple reactive list interface
 
 #### <a name="ReactiveList"></a>new ReactiveList([options], sort)&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
-```
-@ReactiveList Keeps a reactive list of key+value items
-```
 -
 
 __Arguments__
@@ -39,7 +38,7 @@ var list = new ReactiveList({
  });
 ```
 
-> ```ReactiveList = function(options) { ...``` [reactive-list.js:35](reactive-list.js#L35)
+> ```ReactiveList = function(options) { ...``` [reactive-list.js:38](reactive-list.js#L38)
 
 -
 
@@ -56,7 +55,7 @@ Update with this value
 
 -
 
-> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:53](reactive-list.js#L53)
+> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:56](reactive-list.js#L56)
 
 -
 
@@ -73,7 +72,7 @@ Insert item with this value
 
 -
 
-> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:67](reactive-list.js#L67)
+> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:70](reactive-list.js#L70)
 
 -
 
@@ -88,7 +87,7 @@ Key to remove
 
 -
 
-> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:101](reactive-list.js#L101)
+> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:104](reactive-list.js#L104)
 
 -
 
@@ -105,7 +104,7 @@ Set true if want to disable reactivity
 
 -
 
-> ```ReactiveList.prototype.forEach = function(f, noneReactive) { ...``` [reactive-list.js:119](reactive-list.js#L119)
+> ```ReactiveList.prototype.forEach = function(f, noneReactive) { ...``` [reactive-list.js:122](reactive-list.js#L122)
 
 -
 
@@ -123,6 +122,6 @@ Set true if want to disable reactivity
 __Returns__  *{array}*  __(is reactive)__
 List of items
 
-> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:132](reactive-list.js#L132)
+> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:135](reactive-list.js#L135)
 
 -
