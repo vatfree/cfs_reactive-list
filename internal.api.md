@@ -59,7 +59,7 @@ undefined -       obj       -       obj       -       obj       - undefined
 __Returns__  *{number}*  __(is reactive)__
 Length of the reactive list
 
-> ```ReactiveList.prototype.length = function() { ...``` [reactive-list.js:67](reactive-list.js#L67)
+> ```ReactiveList.prototype.length = function() { ...``` [reactive-list.js:68](reactive-list.js#L68)
 
 -
 
@@ -71,7 +71,7 @@ __TODO__
 * Check for memory leaks, if so we have to iterate over lookup and delete the items
 ```
 
-> ```ReactiveList.prototype.reset = function() { ...``` [reactive-list.js:77](reactive-list.js#L77)
+> ```ReactiveList.prototype.reset = function() { ...``` [reactive-list.js:78](reactive-list.js#L78)
 
 -
 
@@ -88,7 +88,7 @@ Update with this value
 
 -
 
-> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:95](reactive-list.js#L95)
+> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:97](reactive-list.js#L97)
 
 -
 
@@ -105,7 +105,7 @@ Insert item with this value
 
 -
 
-> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:111](reactive-list.js#L111)
+> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:113](reactive-list.js#L113)
 
 -
 
@@ -120,7 +120,7 @@ Key to remove
 
 -
 
-> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:167](reactive-list.js#L167)
+> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:175](reactive-list.js#L175)
 
 -
 
@@ -131,7 +131,7 @@ Key to remove
 __Returns__  *{any}*
 Pops last item from the list - removes the item from the list
 
-> ```ReactiveList.prototype.getLastItem = function(first) { ...``` [reactive-list.js:206](reactive-list.js#L206)
+> ```ReactiveList.prototype.getLastItem = function(first) { ...``` [reactive-list.js:215](reactive-list.js#L215)
 
 -
 
@@ -142,11 +142,11 @@ Pops last item from the list - removes the item from the list
 __Returns__  *{any}*
 Pops first item from the list - removes the item from the list
 
-> ```ReactiveList.prototype.getFirstItem = function() { ...``` [reactive-list.js:226](reactive-list.js#L226)
+> ```ReactiveList.prototype.getFirstItem = function() { ...``` [reactive-list.js:233](reactive-list.js#L233)
 
 -
 
-#### <a name="ReactiveList.prototype.forEach"></a>*reactivelist*.forEach(f, [noneReactive])&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+#### <a name="ReactiveList.prototype.forEach"></a>*reactivelist*.forEach(f, [noneReactive], [reverse])&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
 -
 *This method __forEach__ is defined in `prototype` of `ReactiveList`*
 
@@ -156,10 +156,12 @@ __Arguments__
 Callback `funciton(value, key)`
 * __noneReactive__ *{boolean}*    (Optional = false)
 Set true if want to disable reactivity
+* __reverse__ *{boolean}*    (Optional = false)
+Set true to reverse iteration `forEachReverse`
 
 -
 
-> ```ReactiveList.prototype.forEach = function(f, noneReactive) { ...``` [reactive-list.js:235](reactive-list.js#L235)
+> ```ReactiveList.prototype.forEach = function(f, noneReactive, reverse) { ...``` [reactive-list.js:243](reactive-list.js#L243)
 
 -
 
@@ -176,7 +178,7 @@ Set true if want to disable reactivity
 
 -
 
-> ```ReactiveList.prototype.forEachReverse = function(f, noneReactive) { ...``` [reactive-list.js:258](reactive-list.js#L258)
+> ```ReactiveList.prototype.forEachReverse = function(f, noneReactive) { ...``` [reactive-list.js:266](reactive-list.js#L266)
 
 -
 
@@ -194,6 +196,6 @@ Set true if want to disable reactivity
 __Returns__  *{array}*  __(is reactive)__
 List of items
 
-> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:282](reactive-list.js#L282)
+> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:276](reactive-list.js#L276)
 
 -
