@@ -207,7 +207,7 @@ ReactiveList.prototype.getLastItem = function(first) {
   var item = (first)?self.first: self.last;
 
   if (typeof item === 'undefined') {
-    throw new Error('ReactiveList cannot get last item');
+    return; // Empty list
   }
   // Get the value
   var value = item.value;
@@ -283,7 +283,7 @@ ReactiveList.prototype.fetch = function(noneReactive) {
   // Iterate over the list items
   self.forEach(function(value, key) {
     // Add the item value to the result
-    result.push({ key: key, value: value });
+    result.push(value);
   }, noneReactive);
   // Return the result
   return result;
