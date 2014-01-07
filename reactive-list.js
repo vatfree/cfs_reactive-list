@@ -121,7 +121,10 @@ ReactiveList.prototype.insert = function(key, value) {
   var isInserted = false;
   // Iterate through list while not empty and item is not inserted
   while (typeof current !== 'undefined' && !isInserted) {
+
+    // Sort the list by using the sort function
     if (self.sort(newItem, current)) {
+
       // Insert self.lookup[key] before
       if (typeof current.prev === 'undefined') self.first = newItem;
 
