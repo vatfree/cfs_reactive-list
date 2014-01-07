@@ -58,6 +58,7 @@ ReactiveList = function(options) {
   });
   // Rig the dependencies
   self._listDeps = new Deps.Dependency();
+
   self._lengthDeps = new Deps.Dependency();
 };
 
