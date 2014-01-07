@@ -49,6 +49,24 @@ ReactiveList = function(options) {
   self._listDeps = new Deps.Dependency();
 };
 
+/** @method ReactiveList.prototype.length Returns the length of the list
+  * @returns {number} Length of the reactive list
+  */
+ReactiveList.prototype.length = function() {
+  var self = this;
+  self._listDeps.depend();
+  return self.list.length;
+};
+
+/** @method ReactiveList.prototype.reset Reset and empty the list
+  */
+ReactiveList.prototype.reset = function() {
+  var self = this;
+  self.list = [];
+  self.lookup = {};
+  self._listDeps.changed();
+};
+
 /** @method ReactiveList.prototype.update
   * @param {string|number} key Key to update
   * @param {any} value Update with this value
@@ -123,6 +141,18 @@ ReactiveList.prototype.forEach = function(f, noneReactive) {
   var self = this;
   if (!noneReactive) self._listDeps.depend();
   for (var i = 0; i < self.list.length; i++) {
+    f(self.list[i].value, self.list[i].key);
+  }
+};
+
+/** @method ReactiveList.prototype.forEachReverse
+  * @param {function} f Callback `funciton(value, key)`
+  * @param {boolean} [noneReactive=false] Set true if want to disable reactivity
+  */
+ReactiveList.prototype.forEachReverse = function(f, noneReactive) {
+  var self = this;
+  if (!noneReactive) self._listDeps.depend();
+  for (var i = self.list.length - 1; i > -1; i--) {
     f(self.list[i].value, self.list[i].key);
   }
 };
