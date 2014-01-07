@@ -3,6 +3,7 @@
 
 /** @method ReactiveList Keeps a reactive list of key+value items
   * @constructor
+  * @namespace ReactiveList
   * @param {object} [options]
   * @param {function} sort The sort algorithm to use
   * Example:
@@ -34,13 +35,23 @@
     }
   });
 ```
+  * ###Object chain
+```
+                   first                               last
+  undefined -       obj       -       obj       -       obj       - undefined
+             (prev value next) (prev value next) (prev value next)
+```
   */
 ReactiveList = function(options) {
   var self = this;
-  // Base sorted list
-  self.list = [];
-  // Make a quick lookup index
+  // Object container
   self.lookup = {};
+  // Length
+  self._length = 0;
+  // First object in list
+  self.first;
+  // Last object in list
+  self.last;
   // Set sort to options.sort or default to true (asc)
   self.sort = (options && options.sort || function(a, b) {
     return a.key < b.key;
@@ -50,20 +61,30 @@ ReactiveList = function(options) {
 };
 
 /** @method ReactiveList.prototype.length Returns the length of the list
+  * @reactive
   * @returns {number} Length of the reactive list
   */
 ReactiveList.prototype.length = function() {
   var self = this;
+  // Make this reactive
   self._listDeps.depend();
-  return self.list.length;
+  return self._length;
 };
 
 /** @method ReactiveList.prototype.reset Reset and empty the list
+  * @todo Check for memory leaks, if so we have to iterate over lookup and delete the items
   */
 ReactiveList.prototype.reset = function() {
   var self = this;
-  self.list = [];
+  // Set the length to 0
+  self._length = 0;
+  // Clear the reference to the first object
+  self.first = undefined;
+  // Clear the reference to the last object
+  self.last = undefined;
+  // Clear the lookup object
   self.lookup = {};
+  // Invalidate the list
   self._listDeps.changed();
 };
 
@@ -73,11 +94,13 @@ ReactiveList.prototype.reset = function() {
   */
 ReactiveList.prototype.update = function(key, value) {
   var self = this;
-  var i = self.lookup[key];
-  if (typeof i === 'undefined') {
+  // Make sure the key is found in the list
+  if (typeof self.lookup[key] === 'undefined') {
     throw new Error('Reactive list cannot update, key "' + key + '" not found');
   }
-  self.list[i] = { key: key, value: value };
+  // Set the new value
+  self.lookup[key].value = value;
+  // Invalidate the list
   self._listDeps.changed();
 };
 
@@ -90,29 +113,48 @@ ReactiveList.prototype.insert = function(key, value) {
   if (typeof self.lookup[key] !== 'undefined') {
     throw new Error('Reactive list could not insert: key "' + key + '" allready found');
   }
-  var newList = [];
+  // Create the new item to insert into the list
   var newItem = { key: key, value: value };
-  var inserted = 0;
-  // push, sort and index...
-  for (var i = 0; i < self.list.length; i++) {
-    // If not allready inserted and match sort then insert the new item
-    if (self.sort && !inserted && self.sort(newItem, self.list[i])) {
-      newList[i] = newItem;
-      self.lookup[key] = i;
-      inserted = 1;      
-    }
-    // Add the item to the new list
-    newList[i+inserted] = self.list[i];
-    self.lookup[self.list[i].key] = i+inserted;
-  }
-  // Make sure its inserted if its the last one
-  if (!inserted) {
-    self.lookup[key] = newList.length;
-    newList[newList.length] = newItem;
-  }
-  // Point to the new list
-  self.list = newList;
+  // Init current by pointing it at the first object in the list
+  var current = self.first;
+  // Init the isInserted flag
+  var isInserted = false;
+  // Iterate through list while not empty and item is not inserted
+  while (typeof current !== 'undefined' && !isInserted) {
+    if (self.sort(newItem, current)) {
+      // Insert self.lookup[key] before
+      if (typeof current.prev === 'undefined') self.first = newItem;
 
+      // Set the references in the inserted object
+      newItem.prev = current.prev;
+      newItem.next = current;
+
+      // Update the two existing objects
+      if (current.prev) current.prev.next = newItem;
+      current.prev = newItem;
+
+      // Mark the item as inserted - job's done
+      isInserted = true;
+    }
+    // Goto next object
+    current = current.next;
+  }
+  if (!isInserted) {
+    // We append it to the list
+    newItem.prev = self.last;
+    if (self.last) self.last.next = newItem;
+
+    // Update the last pointing to newItem
+    self.last = newItem;
+    // Update first if we are appending to an empty list
+    if (self._length === 0) self.first = newItem;
+  }
+
+  // Reference the object for a quick lookup option
+  self.lookup[key] = newItem;
+  // Increase length
+  self._length++;
+  // And invalidate the list
   self._listDeps.changed();
 };
 
@@ -121,16 +163,66 @@ ReactiveList.prototype.insert = function(key, value) {
   */
 ReactiveList.prototype.remove = function(key) {
   var self = this;
-  var newList = [];
-  for (var i = 0; i < self.list.length; i++) {
-    if (self.list[i].key !== key) {
-      // Push all others than key
-      newList[newList.length] = self.list[i];
-    }
+  // Get the item object
+  var item = self.lookup[key];
+
+  // Check that it exists
+  if (typeof item === 'undefined') {
+    throw new Error('ReactiveList cannot remove item, unknow key "' + key + '"');
   }
+
+  // Rig the references
+  var prevItem = item.prev;
+  var nextItem = item.next;
+
+  // Update chain prev object next reference
+  if (typeof prevItem !== 'undefined') {
+    prevItem.next = nextItem;
+  } else {
+    self.first = nextItem;
+  }
+
+  // Update chain next object prev reference
+  if (typeof nextItem !== 'undefined') {
+    nextItem.prev = prevItem;
+  } else {
+    self.last = prevItem;
+  }
+
+  // Clean up
   delete self.lookup[key];
-  self.list = newList;
+  // Decrease the length
+  self._length--;
+  // Invalidate the list
   self._listDeps.changed();
+};
+
+/** @method ReactiveList.prototype.getLastItem
+  * @returns {any} Pops last item from the list - removes the item from the list
+  */
+ReactiveList.prototype.getLastItem = function(first) {
+  var self = this;
+
+  // Get the relevant item first or last
+  var item = (first)?self.first: self.last;
+
+  if (typeof item === 'undefined') {
+    throw new Error('ReactiveList cannot get last item');
+  }
+  // Get the value
+  var value = item.value;
+  // Remove the item from the list
+  self.remove(item.key);
+  // Return the value
+  return value;
+};
+
+/** @method ReactiveList.prototype.getFirstItem
+  * @returns {any} Pops first item from the list - removes the item from the list
+  */
+ReactiveList.prototype.getFirstItem = function() {
+  // This gets the first item...
+  return this.getLastItem(true);
 };
 
 /** @method ReactiveList.prototype.forEach
@@ -139,9 +231,20 @@ ReactiveList.prototype.remove = function(key) {
   */
 ReactiveList.prototype.forEach = function(f, noneReactive) {
   var self = this;
+  // Check if f is a function
+  if (typeof f !== 'function') {
+    throw new Error('ReactiveList forEach requires a function');
+  }
+  // We allow this not to be reactive
   if (!noneReactive) self._listDeps.depend();
-  for (var i = 0; i < self.list.length; i++) {
-    f(self.list[i].value, self.list[i].key);
+  // Set current to the first object
+  var current = self.first;
+  // Iterate over the list while its not empty
+  while (current) {
+    // Call the callback function
+    f(current.value, current.key);
+    // Jump to the next item in the list
+    current = current.next;
   }
 };
 
@@ -151,9 +254,20 @@ ReactiveList.prototype.forEach = function(f, noneReactive) {
   */
 ReactiveList.prototype.forEachReverse = function(f, noneReactive) {
   var self = this;
+  // Check if f is a function
+  if (typeof f !== 'function') {
+    throw new Error('ReactiveList forEach requires a function');
+  }
+  // We allow this not to be reactive
   if (!noneReactive) self._listDeps.depend();
-  for (var i = self.list.length - 1; i > -1; i--) {
-    f(self.list[i].value, self.list[i].key);
+  // Set current to the last object
+  var current = self.last;
+  // Iterate over the list while its not empty
+  while (current) {
+    // Call the callback function
+    f(current.value, current.key);
+    // Jump to the prev item in the list
+    current = current.prev;
   }
 };
 
@@ -164,9 +278,13 @@ ReactiveList.prototype.forEachReverse = function(f, noneReactive) {
   */
 ReactiveList.prototype.fetch = function(noneReactive) {
   var self = this;
+  // Init the result buffer
   var result = [];
+  // Iterate over the list items
   self.forEach(function(value, key) {
-    result.push(value);
+    // Add the item value to the result
+    result.push({ key: key, value: value });
   }, noneReactive);
+  // Return the result
   return result;
 };

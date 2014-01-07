@@ -41,8 +41,37 @@ var list = new ReactiveList({
   }
 });
 ```
+###Object chain
+```
+first                               last
+undefined -       obj       -       obj       -       obj       - undefined
+(prev value next) (prev value next) (prev value next)
+```
 
-> ```ReactiveList = function(options) { ...``` [reactive-list.js:38](reactive-list.js#L38)
+> ```ReactiveList = function(options) { ...``` [reactive-list.js:45](reactive-list.js#L45)
+
+-
+
+#### <a name="ReactiveList.prototype.length"></a>*reactivelist*.length()&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+-
+*This method __length__ is defined in `prototype` of `ReactiveList`*
+
+__Returns__  *{number}*  __(is reactive)__
+Length of the reactive list
+
+> ```ReactiveList.prototype.length = function() { ...``` [reactive-list.js:67](reactive-list.js#L67)
+
+-
+
+#### <a name="ReactiveList.prototype.reset"></a>*reactivelist*.reset()&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+-
+*This method __reset__ is defined in `prototype` of `ReactiveList`*
+__TODO__
+```
+* Check for memory leaks, if so we have to iterate over lookup and delete the items
+```
+
+> ```ReactiveList.prototype.reset = function() { ...``` [reactive-list.js:77](reactive-list.js#L77)
 
 -
 
@@ -59,7 +88,7 @@ Update with this value
 
 -
 
-> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:56](reactive-list.js#L56)
+> ```ReactiveList.prototype.update = function(key, value) { ...``` [reactive-list.js:95](reactive-list.js#L95)
 
 -
 
@@ -76,7 +105,7 @@ Insert item with this value
 
 -
 
-> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:70](reactive-list.js#L70)
+> ```ReactiveList.prototype.insert = function(key, value) { ...``` [reactive-list.js:111](reactive-list.js#L111)
 
 -
 
@@ -91,7 +120,29 @@ Key to remove
 
 -
 
-> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:104](reactive-list.js#L104)
+> ```ReactiveList.prototype.remove = function(key) { ...``` [reactive-list.js:164](reactive-list.js#L164)
+
+-
+
+#### <a name="ReactiveList.prototype.getLastItem"></a>*reactivelist*.getLastItem()&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+-
+*This method __getLastItem__ is defined in `prototype` of `ReactiveList`*
+
+__Returns__  *{any}*
+Pops last item from the list - removes the item from the list
+
+> ```ReactiveList.prototype.getLastItem = function(first) { ...``` [reactive-list.js:203](reactive-list.js#L203)
+
+-
+
+#### <a name="ReactiveList.prototype.getFirstItem"></a>*reactivelist*.getFirstItem()&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+-
+*This method __getFirstItem__ is defined in `prototype` of `ReactiveList`*
+
+__Returns__  *{any}*
+Pops first item from the list - removes the item from the list
+
+> ```ReactiveList.prototype.getFirstItem = function() { ...``` [reactive-list.js:223](reactive-list.js#L223)
 
 -
 
@@ -108,7 +159,24 @@ Set true if want to disable reactivity
 
 -
 
-> ```ReactiveList.prototype.forEach = function(f, noneReactive) { ...``` [reactive-list.js:122](reactive-list.js#L122)
+> ```ReactiveList.prototype.forEach = function(f, noneReactive) { ...``` [reactive-list.js:232](reactive-list.js#L232)
+
+-
+
+#### <a name="ReactiveList.prototype.forEachReverse"></a>*reactivelist*.forEachReverse(f, [noneReactive])&nbsp;&nbsp;<sub><i>Anywhere</i></sub> ####
+-
+*This method __forEachReverse__ is defined in `prototype` of `ReactiveList`*
+
+__Arguments__
+
+* __f__ *{function}*  
+Callback `funciton(value, key)`
+* __noneReactive__ *{boolean}*    (Optional = false)
+Set true if want to disable reactivity
+
+-
+
+> ```ReactiveList.prototype.forEachReverse = function(f, noneReactive) { ...``` [reactive-list.js:255](reactive-list.js#L255)
 
 -
 
@@ -126,6 +194,6 @@ Set true if want to disable reactivity
 __Returns__  *{array}*  __(is reactive)__
 List of items
 
-> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:135](reactive-list.js#L135)
+> ```ReactiveList.prototype.fetch = function(noneReactive) { ...``` [reactive-list.js:279](reactive-list.js#L279)
 
 -
