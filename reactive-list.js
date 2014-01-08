@@ -181,7 +181,8 @@ ReactiveList.prototype.remove = function(key) {
 
   // Check that it exists
   if (typeof item === 'undefined') {
-    throw new Error('ReactiveList cannot remove item, unknow key "' + key + '"');
+    return;
+    // throw new Error('ReactiveList cannot remove item, unknow key "' + key + '"');
   }
 
   // Rig the references
