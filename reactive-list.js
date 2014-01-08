@@ -9,11 +9,11 @@
   * Example:
 ```js
   var list = new ReactiveList();
-  list.add(1, { text: 'Hello id: 1' });
-  list.add(2, { text: 'Hello id: 2' });
-  list.add(3, { text: 'Hello id: 3' });
+  list.insert(1, { text: 'Hello id: 1' });
+  list.insert(2, { text: 'Hello id: 2' });
+  list.insert(3, { text: 'Hello id: 3' });
   list.update(2, { text: 'Updated 2'});
-  list.del(1);
+  list.remove(1);
   
   list.forEach(function(value, key) {
     console.log('GOT: ' + value.text);
@@ -26,6 +26,7 @@
 ```
   *
   * ####Example of a sort algorithm
+  * Sort can be used to define the order of the list
 ```js
   var list = new ReactiveList({
     sort: function(a, b) {
