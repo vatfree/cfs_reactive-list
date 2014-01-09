@@ -4,7 +4,7 @@ function equals(a, b) {
   return !!(JSON.stringify(a) === JSON.stringify(b));
 }
 
-Tinytest.add('PowerQueue - test', function(test) {
+Tinytest.add('ReactiveList - test', function(test) {
   //TODO
 });
 

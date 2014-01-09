@@ -7,41 +7,41 @@
   * @param {object} [options]
   * @param {function} sort The sort algorithm to use
   * Example:
-```js
-  var list = new ReactiveList();
-  list.insert(1, { text: 'Hello id: 1' });
-  list.insert(2, { text: 'Hello id: 2' });
-  list.insert(3, { text: 'Hello id: 3' });
-  list.update(2, { text: 'Updated 2'});
-  list.remove(1);
-  
-  list.forEach(function(value, key) {
-    console.log('GOT: ' + value.text);
-  }, true); // Set noneReactive = true, default behaviour is reactive
-
-  // Return from Template:
-  Template.hello.list = function() {
-    return list.fetch();
-  };
-```
+  * ```js
+  *   var list = new ReactiveList();
+  *   list.insert(1, { text: 'Hello id: 1' });
+  *   list.insert(2, { text: 'Hello id: 2' });
+  *   list.insert(3, { text: 'Hello id: 3' });
+  *   list.update(2, { text: 'Updated 2'});
+  *   list.remove(1);
+  *   
+  *   list.forEach(function(value, key) {
+  *     console.log('GOT: ' + value.text);
+  *   }, true); // Set noneReactive = true, default behaviour is reactive
+  * 
+  *   // Return from Template:
+  *   Template.hello.list = function() {
+  *     return list.fetch();
+  *   };
+  * ```
   *
   * ####Example of a sort algorithm
   * Sort can be used to define the order of the list
-```js
-  var list = new ReactiveList({
-    sort: function(a, b) {
-      // a and b are type of { key, value }
-      // here we sort by the key:
-      return a.key < b.key;
-    }
-  });
-```
+  * ```js
+  *   var list = new ReactiveList({
+  *     sort: function(a, b) {
+  *       // a and b are type of { key, value }
+  *       // here we sort by the key:
+  *       return a.key < b.key;
+  *     }
+  *   });
+  * ```
   * ###Object chain
-```
-                   first                               last
-  undefined -       obj       -       obj       -       obj       - undefined
-             (prev value next) (prev value next) (prev value next)
-```
+  * ```
+  *                    first                               last
+  *   undefined -       obj       -       obj       -       obj       - undefined
+  *              (prev value next) (prev value next) (prev value next)
+  * ```
   */
 ReactiveList = function(options) {
   var self = this;
@@ -57,6 +57,9 @@ ReactiveList = function(options) {
   self.sort = (options && options.sort || function(a, b) {
     return a.key < b.key;
   });
+  // If lifo queue
+  if (options === true) self.sort = function(a, b) { return a.key > b.key; };
+
   // Rig the dependencies
   self._listDeps = new Deps.Dependency();
 

@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Reactive List provides a small, fast and reactive key +  value list"
+  summary: "ReactiveList provides a small, fast queue/list built for Power-Queue"
 });
 
 Package.on_use(function (api) {
