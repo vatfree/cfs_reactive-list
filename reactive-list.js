@@ -1,11 +1,18 @@
 // #ReactiveList
 // Provides a simple reactive list interface
+_noopCallback = function() {};
+
+_nonReactive = {
+  changed: _noopCallback,
+  depend: _noopCallback
+};
 
 /** @method ReactiveList Keeps a reactive list of key+value items
   * @constructor
   * @namespace ReactiveList
   * @param {object} [options]
   * @param {function} sort The sort algorithm to use
+  * @param {boolean} [reactive=true] If set false this list is not reactive
   * Example:
   * ```js
   *   var list = new ReactiveList();
@@ -57,13 +64,17 @@ ReactiveList = function(options) {
   self.sort = (options && options.sort || function(a, b) {
     return a.key < b.key;
   });
+
+  // Allow user to disable reactivity, default true
+  self.isReactive = (options)? options.reactive !== false : true;
+
   // If lifo queue
-  if (options === true) self.sort = function(a, b) { return a.key > b.key; };
+  if (options === true || options && options.sort === true) self.sort = function(a, b) { return a.key > b.key; };
 
   // Rig the dependencies
-  self._listDeps = new Deps.Dependency();
+  self._listDeps = (self.isReactive)? new Deps.Dependency() : _nonReactive;
 
-  self._lengthDeps = new Deps.Dependency();
+  self._lengthDeps = (self.isReactive)? new Deps.Dependency() : _nonReactive;
 };
 
 /** @method ReactiveList.prototype.length Returns the length of the list
