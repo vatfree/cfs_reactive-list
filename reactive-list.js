@@ -57,9 +57,9 @@ ReactiveList = function(options) {
   // Length
   self._length = 0;
   // First object in list
-  self.first = null;
+  self.first;
   // Last object in list
-  self.last = null;
+  self.last;
   // Set sort to options.sort or default to true (asc)
   self.sort = (options && options.sort || function(a, b) {
     return a.key < b.key;
