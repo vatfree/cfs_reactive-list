@@ -218,6 +218,11 @@ ReactiveList.prototype.remove = function(key) {
   }
 
   // Clean up
+  self.lookup[key].last = null;
+  self.lookup[key].prev = null;
+  self.lookup[key] = null;
+  prevItem = null;
+
   delete self.lookup[key];
   // Decrease the length
   self._length--;
