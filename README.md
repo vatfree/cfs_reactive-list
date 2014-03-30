@@ -1,15 +1,12 @@
 Reactive List [![Build Status](https://travis-ci.org/CollectionFS/Meteor-reactive-list.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-reactive-list)
 =========
 
-ReactiveList:
-* Simple
-* Fast
-* Sortable
-* etc.
+ReactiveList keeps a sortable reactive list of key+value items. It's simple and fast.
 
 And... It's powered by Meteor's reactive sugar :)
 
-Kind regards Eric(@aldeed) and Morten(@raix)
+Kind regards,  
+Eric (@aldeed) and Morten (@raix)
 
 Happy coding!!
 
@@ -44,7 +41,8 @@ Example:
    return list.fetch();
  };
 ```
-####Example of a sort algorithm
+
+#### Example of a sort algorithm
 Sort can be used to define the order of the list
 ```js
  var list = new ReactiveList({
@@ -55,20 +53,23 @@ Sort can be used to define the order of the list
    }
  });
 ```
-###Object chain
+### Object chain
 ```
                   first                               last
  undefined -       obj       -       obj       -       obj       - undefined
             (prev value next) (prev value next) (prev value next)
 ```
 
-> ```ReactiveList = function(options) { ...``` [reactive-list.js:46](reactive-list.js#L46)
+```
+ReactiveList = function(options) { ...
+```
 
--
+See more at [reactive-list.js:46](reactive-list.js#L46).
 
-#Contribute
-[API Complete Documentation](internal.api.md)
-Update docs, `npm install docmeteor`
+# Contribute
+
+Here's the [complete API documentation](internal.api.md). To update the docs, run `npm install docmeteor`, then
+
 ```bash
 $ docmeteor
 ```
