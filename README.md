@@ -1,4 +1,4 @@
-Reactive List [![Build Status](https://travis-ci.org/CollectionFS/Meteor-reactive-list.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-reactive-list)
+cfs:reactive-list [![Build Status](https://travis-ci.org/CollectionFS/Meteor-reactive-list.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-reactive-list)
 =========
 
 ReactiveList keeps a sortable reactive list of key+value items. It's simple and fast.
