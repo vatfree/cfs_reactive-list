@@ -1,22 +1,23 @@
 Package.describe({
   name: 'cfs:reactive-list',
-  version: '0.0.0',
-  summary: "ReactiveList provides a small, fast queue/list built for Power-Queue"
+  version: '0.0.8',
+  summary: 'ReactiveList provides a small, fast queue/list built for Power-Queue',
+  git: 'https://github.com/CollectionFS/Meteor-reactive-list.git'
 });
 
-Package.on_use(function (api) {
-  api.versionsFrom('METEOR@0.9.1');
+Package.onUse(function (api) {
+  api.versionsFrom('1.0');
 
   api.use('deps', ['client', 'server']);
 
-  api.export && api.export('ReactiveList');
-  api.add_files(['reactive-list.js'], ['client', 'server']);
+  api.export('ReactiveList');
+  api.addFiles(['reactive-list.js'], ['client', 'server']);
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
   api.use('cfs:reactive-list');
   api.use('test-helpers', 'server');
   api.use('tinytest');
 
-  api.add_files('tests.js');
+  api.addFiles('tests.js');
 });
