@@ -1,6 +1,6 @@
 Package.describe({
   name: 'cfs:reactive-list',
-  version: '0.0.8',
+  version: '0.0.9',
   summary: 'ReactiveList provides a small, fast queue/list built for Power-Queue',
   git: 'https://github.com/CollectionFS/Meteor-reactive-list.git'
 });
