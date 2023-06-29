@@ -1,12 +1,12 @@
 Package.describe({
-  name: 'zcfs:reactive-list',
-  version: '0.0.9',
+  name: 'cfs:reactive-list',
+  version: '0.0.10',
   summary: 'ReactiveList provides a small, fast queue/list built for Power-Queue',
-  git: 'https://github.com/zcfs/Meteor-reactive-list.git'
+  git: 'https://github.com/vatfree/cfs_reactive-list.git'
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.0');
+  api.versionsFrom(['1.0','2.0']);
 
   api.use('deps', ['client', 'server']);
 
@@ -15,7 +15,7 @@ Package.onUse(function (api) {
 });
 
 Package.onTest(function (api) {
-  api.use('zcfs:reactive-list');
+  api.use('cfs:reactive-list');
   api.use('test-helpers', 'server');
   api.use('tinytest');
 

@@ -1,4 +1,4 @@
-zcfs:reactive-list [![Build Status](https://travis-ci.org/CollectionFS/Meteor-reactive-list.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-reactive-list)
+cfs:reactive-list [![Build Status](https://travis-ci.org/CollectionFS/Meteor-reactive-list.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-reactive-list)
 =========
 
 ~~Looking for maintainers - please reach out!~~
